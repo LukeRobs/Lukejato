@@ -49,7 +49,7 @@
                                 </div>
 
                                 <div class="col-md">
-                                    <input type='text' placeholder='Placa' class='form-control' name='placa' value="{{placa}}">
+                                    <input type='text' placeholder='placa' class='form-control' name='placa' value="{{placa}}">
                                 </div>
 
                                 <div class="col-md">
@@ -70,6 +70,7 @@
         <div id="att_cliente">
             <p></p>
             <select id="cliente-select" onchange="dados_cliente()" class="form-control">
+                <option value=""></option>
                 {% for cliente in clientes %}
                 <option value="{{cliente.id}}">{{cliente.nome}}</option>
                 {% endfor %}
@@ -86,6 +87,12 @@
                 <input id="email" type="text" class="form-control">
                 <p>CPF:</p>
                 <input id="cpf" type="text" class="form-control">
+                <hr>
+                <h3>Carros</h3>
+
+                <div id="carros">
+
+                </div>
             </div>
         </div>
     </div>
