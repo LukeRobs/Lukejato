@@ -47,13 +47,20 @@ function dados_cliente() {
 
         document.getElementById('form-att-cliente').style.display = 'block'
 
-        nome = document.getElementById('nome').value = data['cliente']['nome']
+        id = document.getElementById('id')
+        id.value = data['cliente_id']
 
-        sobrenome = document.getElementById('sobrenome').value = data['cliente']['sobrenome']
+        nome = document.getElementById('nome')
+        nome.value = data['cliente']['nome']
 
-        cpf = document.getElementById('cpf').value = data['cliente']['cpf']
+        sobrenome = document.getElementById('sobrenome')
+        sobrenome.value = data['cliente']['sobrenome']
 
-        email = document.getElementById('email').value = data['cliente']['email']
+        cpf = document.getElementById('cpf')
+        cpf.value = data['cliente']['cpf']
+
+        email = document.getElementById('email')
+        email.value = data['cliente']['email']
 
         div_carros = document.getElementById('carros')
         div_carros.innerHTML = ""
@@ -70,16 +77,54 @@ function dados_cliente() {
                             <input class='form-control' type='text' name='ano' value='" + data['carros'][i]['fields']['ano'] + "' >\
                         </div>\
                         <div class='col-md'>\
-                            <input class='btn btn-success' type='submit' value='Salvar'>\
+                            <input class='btn btn-lg btn-success' type='submit' value='Salvar'>\
                         </div>\
                         </form>\
                         <div class='col-md'>\
-                            <a href='/clientes/excluir_carro/"+ data['carros'][i]['id'] +"' class='btn btn-danger'>EXCLUIR</a>\
+                            <a href='/clientes/excluir_carro/"+ data['carros'][i]['id'] +"' class='btn btn-lg btn-danger'>EXCLUIR</a>\
                         </div>\
                 </div><br>"
         }
         
     })
 
+
+}
+
+
+function update_cliente() {
+
+    nome = document.getElementById('nome').value
+    sobrenome = document.getElementById('sobrenome').value
+    email = document.getElementById('email').value
+    cpf = document.getElementById('cpf').value
+    id = document.getElementById('id').value
+
+    fetch('/clientes/update_cliente/' + id, {
+        method: 'POST',
+        headers: {
+            'X-CSRFTOken': csrf_token
+        },
+        body: JSON.stringify({
+            nome: nome,
+            sobrenome: sobrenome,
+            email: email,
+            cpf: cpf
+        })
+
+    }).then(function(result){
+        return result.json()
+    }).then(function(data){
+
+        if(data['status'] == '200'){
+            nome = data['nome']
+            sobrenome = data['sobrenome']
+            email = data['email']
+            cpf = data['cpf']
+            console.log('dados alterados com sucesso')
+        }else {
+            console.log('ocorreu algum erro')
+        }
+    })
 
 }
