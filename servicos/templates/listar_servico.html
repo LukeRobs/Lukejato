@@ -3,17 +3,18 @@
 
 {% block 'head' %}
 <link rel="stylesheet" href="{% static 'clientes/css/clientes.css' %}">
+<link rel="stylesheet" href="{% static 'servicos/css/listar_servico.css' %}">
 {% endblock %}
 
 {% block 'dashboard' %}
 <br>
 <br>
-<div class="container">
+<div class="container-fluid distanciamento">
     <div>
         <table class="table table-dark">
             <thead>
                 <tr>
-                    <th scope="col">Protocolo</th>
+                    <th scope="col">Identificador</th>
                     <th scope="col">Título </th>
                     <th scope="col">Cliente</th>
                     <th scope="col">Status</th>
@@ -21,24 +22,21 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                </tr>
-                <tr>
-                    <th scope="row">2</th>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>@fat</td>
-                </tr>
-                <tr>
-                    <th scope="row">3</th>
-                    <td>Larry</td>
-                    <td>the Bird</td>
-                    <td>@twitter</td>
-                </tr>
+                {% for servico in servicos %}
+                    <tr>
+                        <th><a href="{% url 'servico' servico.identificador %}">{{servico.identificador}}</a></th>
+                        <td>{{servico.titulo}}</td>
+                        <td>{{servico.cliente}}</td>
+                        <td>
+                            {% if servico.finalizado %}
+                                <span class="badge badge-success">finalizado</span>
+                            {% else %}
+                                <span class="badge badge-warning">Em manutenção</span>
+                            {% endif %}
+                        </td>
+                        <td>R$ {{servico.preco_total}}</td>
+                    </tr>
+                {% endfor %}
             </tbody>
         </table>
     </div>
